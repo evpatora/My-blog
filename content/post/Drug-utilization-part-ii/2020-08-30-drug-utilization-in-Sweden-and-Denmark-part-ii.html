@@ -1,0 +1,130 @@
+---
+title: 'Drug utilization in Sweden and Denmark: Part II'
+author: "Elena Dudukina"
+date: "2020-08-31"
+output: html_document
+tags: ["Data analysis", "Rstats", "tidyverse", "drug utilization", "pharmacoepidemiology"]
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<p>In this part I will look in the Danish national trends on of sedatives, antidepressants, anti-psychotics and anxiolytics utilization in women. Then I’d like to compare Danish national trends with Swedish national trends from [Part I]({{&lt; relref “../post/Drug-utilization-part-i/2020-08-21-drug-utilization-in-Sweden-and-Denmark.Rmd” &gt;}})</p>
+<p>First things first - loading data.</p>
+<pre class="r"><code>link_list_dk &lt;- list(
+  # 1
+  &quot;1996_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MTk5Nl9hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 2
+  &quot;1996_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MTk5Nl9wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 3
+  &quot;1997_atc_code_data.txt&quot;  = &quot;https://medstat.dk/da/download/file/MTk5N19hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 4
+  &quot;1997_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MTk5N19wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 5
+  &quot;1998_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MTk5OF9hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 6
+  &quot;1998_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MTk5OF9wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 7
+  &quot;1999_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MTk5OV9hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 8
+  &quot;1999_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MTk5OV9wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 9
+  &quot;2000_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAwMF9hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 10
+  &quot;2000_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAwMF9wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 11
+  &quot;2001_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAwMV9hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 12
+  &quot;2001_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAwMV9wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 13
+  &quot;2002_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAwMl9hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 14
+  &quot;2002_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAwMl9wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 15
+  &quot;2003_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAwM19hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 16
+  &quot;2003_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAwM19wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 17
+  &quot;2004_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAwNF9hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 18
+  &quot;2004_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAwNF9wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 19
+  &quot;2005_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAwNV9hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 20
+  &quot;2005_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAwNV9wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 21
+  &quot;2006_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAwNl9hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 22
+  &quot;2006_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAwNl9wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 23
+  &quot;2007_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAwN19hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 24
+  &quot;2007_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAwN19wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 25
+  &quot;2008_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAwOF9hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 26
+  &quot;2008_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAwOF9wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 27
+  &quot;2009_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAwOV9hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 28
+  &quot;2009_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAwOV9wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 29
+  &quot;2010_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAxMF9hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 30
+  &quot;2010_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAxMF9wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 31
+  &quot;2011_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAxMV9hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 32
+  &quot;2011_product_name_data.txt&quot;= &quot;https://medstat.dk/da/download/file/MjAxMV9wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 33
+  &quot;2012_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAxMl9hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 34
+  &quot;2012_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAxMl9wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 35
+  &quot;2013_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAxM19hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 36
+  &quot;2013_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAxM19wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 37
+  &quot;2014_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAxNF9hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 38
+  &quot;2014_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAxNF9wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 39
+  &quot;2015_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAxNV9hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 40
+  &quot;2015_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAxNV9wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 41
+  &quot;2016_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAxNl9hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 42
+  &quot;2016_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAxNl9wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 43
+  &quot;2017_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAxN19hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 44
+  &quot;2017_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAxN19wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 45
+  &quot;2018_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAxOF9hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 46
+  &quot;2018_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAxOF9wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 47
+  &quot;2019_atc_code_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAxOV9hdGNfY29kZV9kYXRhLnR4dA==&quot;,
+  # 48
+  &quot;2019_product_name_data.txt&quot; = &quot;https://medstat.dk/da/download/file/MjAxOV9wcm9kdWN0X25hbWVfZGF0YS50eHQ=&quot;,
+  # 49
+  &quot;atc_code_text.txt&quot; = &quot;https://medstat.dk/da/download/file/YXRjX2NvZGVfdGV4dC50eHQ=&quot;,
+  # 50
+  &quot;atc_groups.txt&quot; = &quot;https://medstat.dk/da/download/file/YXRjX2dyb3Vwcy50eHQ=&quot;,
+  # 51
+  &quot;groups_of_medicines_data.txt&quot; = &quot;https://medstat.dk/da/download/file/Z3JvdXBzX29mX21lZGljaW5lc19kYXRhLnR4dA==&quot;,
+  # 52
+  &quot;groups_of_medicines_text.txt&quot; = &quot;https://medstat.dk/da/download/file/Z3JvdXBzX29mX21lZGljaW5lc190ZXh0LnR4dA==&quot;,
+  # 53
+  &quot;population_data.txt&quot; = &quot;https://medstat.dk/da/download/file/cG9wdWxhdGlvbl9kYXRhLnR4dA==&quot;,
+  # 54
+  &quot;product_name_per_sector.txt&quot; = &quot;https://medstat.dk/da/download/file/cHJvZHVjdF9uYW1lX3Blcl9zZWN0b3IudHh0&quot;,
+  # 55
+  &quot;product_name_text.txt&quot; = &quot;https://medstat.dk/da/download/file/cHJvZHVjdF9uYW1lX3RleHQudHh0&quot;
+)
+
+seq_atc &lt;- seq(1, 47, 2)
+seq_prod_name &lt;- seq(2, 48, 2)
+atc_code_data_list &lt;- link_list_dk[seq_atc]
+product_name_data_list &lt;- link_list_dk[seq_prod_name]</code></pre>

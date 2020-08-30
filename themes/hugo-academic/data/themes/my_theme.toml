@@ -1,0 +1,18 @@
+# Theme metadata
+name = "LA"
+
+# Is theme light or dark?
+light = true
+
+# Primary
+primary = "#d1641b"
+
+# Menu
+menu_primary = "#fff"
+menu_text = "#b04917"
+menu_text_active = "#e29847"
+menu_title = "#e0771b"
+
+# Home sections
+home_section_odd = "rgb(255, 255, 255)"
+home_section_even = "rgb(247, 247, 247)"

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Internship | Elena Dudukina</title>
+    <link>/tag/internship/</link>
+      <atom:link href="/tag/internship/index.xml" rel="self" type="application/rss+xml" />
+    <description>Internship</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2020</copyright><lastBuildDate>Mon, 20 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_huc9bdaa5444bcbc8205e4a96e0598b383_489098_512x512_fill_lanczos_center_2.png</url>
+      <title>Internship</title>
+      <link>/tag/internship/</link>
+    </image>
+    
+    <item>
+      <title>Antibody binding and complement-mediated killing of invasive Haemophilus influenzae isolates from Spain, Portugal, and the Netherlands</title>
+      <link>/publication/nthi-2020/</link>
+      <pubDate>Mon, 20 Jul 2020 00:00:00 +0000</pubDate>
+      <guid>/publication/nthi-2020/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

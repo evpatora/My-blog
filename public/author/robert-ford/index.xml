@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Robert Ford | Elena Dudukina</title>
+    <link>/author/robert-ford/</link>
+      <atom:link href="/author/robert-ford/index.xml" rel="self" type="application/rss+xml" />
+    <description>Robert Ford</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2020</copyright><lastBuildDate>Mon, 01 Jul 2013 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu25a29b30aca57b666d5aaf9b4d160195_14288_512x512_fill_lanczos_center_2.png</url>
+      <title>Robert Ford</title>
+      <link>/author/robert-ford/</link>
+    </image>
+    
+    <item>
+      <title>An example conference paper</title>
+      <link>/publication/vaginal-bleeding-in-early-pregnancy-and-risk-of-occult-cancer/</link>
+      <pubDate>Mon, 01 Jul 2013 00:00:00 +0000</pubDate>
+      <guid>/publication/vaginal-bleeding-in-early-pregnancy-and-risk-of-occult-cancer/</guid>
+      <description>&lt;p&gt;abstract: We identified 105 192 women in the VB cohort. Median age at VB diagnosis was 28.7 years (interquartile range: 25.2–32.5 years) and median follow-up was 17.0 years (interquartile range: 10.5–24.4 years). During the follow-up, 6581 women in the VB cohort received a cancer diagnosis. The SIR for any cancer was 1.02 (95% CI=0.99–1.04). VB was not associated with an increased risk of cancer during &amp;lt;6 months (SIR=0.88, 95% CI=0.65–1.18), 6–12 months (SIR=0.81, 95% CI=0.59– 1.08), or &amp;gt; 12 months (SIR=1.02, 95% CI=0.99–1.04) of follow-up. VB did not increase risk of cancer of the breast (SIR=1.02, 95% CI=0.98–1.07), uterine cervix (SIR=0.92, 95% CI=0.83–1.02), ovary (SIR=1.04, 95% CI=0.89–1.21), or uterus (SIR=0.94, 95% CI=0.78–1.12).
+authors:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;admin&lt;/li&gt;
+&lt;li&gt;Dóra K. Farkas&lt;/li&gt;
+&lt;li&gt;Erzsébet Horváth-Puhó&lt;/li&gt;
+&lt;li&gt;Paolo Prandoni&lt;/li&gt;
+&lt;li&gt;Henrik T. Sørensen&lt;/li&gt;
+&lt;li&gt;Vera Ehrenstein
+date: &amp;ldquo;2019-06-01T00:00:00Z&amp;rdquo;
+doi: &amp;ldquo;10.1002/ijgo.12867&amp;rdquo;
+featured: false
+image:
+caption: &amp;quot;&amp;rdquo;
+focal_point: &amp;quot;&amp;rdquo;
+preview_only: false
+publication: &lt;em&gt;International Journal of Gynecology &amp;amp; Obstetrics&lt;/em&gt;
+publication_types:&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;2&amp;rdquo;
+publishDate: &amp;ldquo;2019-01-01T00:00:00Z&amp;rdquo;
+summary: Vaginal bleeding in early pregnancy is not associated with a higher cancer risk compared with pregnancies in women from the general population of similar age.
+tags:&lt;/li&gt;
+&lt;li&gt;Source Themes
+title: Vaginal bleeding in early pregnancy and risk of occult cancer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

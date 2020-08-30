@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R | Elena Dudukina</title>
+    <link>/category/r/</link>
+      <atom:link href="/category/r/index.xml" rel="self" type="application/rss+xml" />
+    <description>R</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2020</copyright><lastBuildDate>Sun, 30 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_huc9bdaa5444bcbc8205e4a96e0598b383_489098_512x512_fill_lanczos_center_2.png</url>
+      <title>R</title>
+      <link>/category/r/</link>
+    </image>
+    
+    <item>
+      <title>Drug utilization in Sweden and Denmark: Part I</title>
+      <link>/post/drug-utilization-part-i/2020-08-30-drug-utilization-in-sweden-and-denmark/</link>
+      <pubDate>Sun, 30 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>/post/drug-utilization-part-i/2020-08-30-drug-utilization-in-sweden-and-denmark/</guid>
+      <description>&lt;h1 id=&#34;nordic-open-access-databases&#34;&gt;Nordic open access databases&lt;/h1&gt;
+&lt;p&gt;Nordic countries have databases with national aggregated data on, e.g. drug utilization, openly available. These databases are a great asset - you can investigate national trends for your curiosity or for research.&lt;/p&gt;
+&lt;p&gt;The databases are easily accessible and well-maintained. In this blog post, I will be taking a look at the Swedish aggregated drug utilization database.&lt;/p&gt;
+&lt;h1 id=&#34;why-i-wrote-this-post&#34;&gt;Why I wrote this post?&lt;/h1&gt;
+&lt;p&gt;The databases have a lot of useful features incorporated in a web interface, however it is not always sufficiently flexible to satisfy certain research tasks (in my personal experience). Ticking boxes is fun but - oh no - I selected one age category more than I intended, start again&amp;hellip;🙈 It may be a frustrating experience when you need a quick and efficient check 👀 or when you perform multiple checks, for which reproducibility matters a lot.&lt;/p&gt;
+&lt;h1 id=&#34;what-this-post-will-cover&#34;&gt;What this post will cover?&lt;/h1&gt;
+&lt;p&gt;This post will be focused on Swedish national trends of antidepressants, antipsychotics, anxiolytics, and sedatives utilization in women. I compare Swedish and Danish national trends of utilization of these medications in part II.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s go!🇸🇪&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(tidyverse)
+library(magrittr)
+library(wesanderson)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# I will keep only ATC codes I am interested in
+regex_antidepress &amp;lt;- &amp;quot;^N06A$&amp;quot;
+regex_antipsych &amp;lt;- &amp;quot;^N05A$&amp;quot;
+regex_anxiolyt &amp;lt;- &amp;quot;^N05B$&amp;quot;
+regex_sedat &amp;lt;- &amp;quot;^N05C$&amp;quot;
+
+# combine all ATC codes in one regex string
+all_regex &amp;lt;- paste(regex_sedat, regex_antipsych, regex_antidepress, regex_anxiolyt, sep = &amp;quot;|&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I use &amp;ldquo;CSV Statistics Database - Medicines 2006–2019&amp;rdquo; data from 
+&lt;a href=&#34;https://sdb.socialstyrelsen.se/export/csv/statistikdatabasen-lakemedel.zip&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;First, I will have a look at the data files. I will store .csv data files as a list and will name each element inside the list according to .csv file name.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# name the list elements according the name of downloaded .csv files
+# path_se is your path with the downloaded and unzipped .csv files
+file_names_se &amp;lt;- list.files(path = path_se, pattern = &amp;quot;.csv&amp;quot;)
+
+# load the data files
+all_files_se &amp;lt;- map(file_names_se, ~read_delim(file = paste0(path_se, .x), trim_ws = T, delim = &amp;quot;;&amp;quot;)) %&amp;gt;%
+  # I expect that formatting of numbers in the files may not be standard; I re-formar all columns to character type to deal with numbers&#39; formatting later
+  map(~mutate_all(.x, as.character))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The files containing the drug utilization per year include columns:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Characteristic&lt;/li&gt;
+&lt;li&gt;Year&lt;/li&gt;
+&lt;li&gt;Region&lt;/li&gt;
+&lt;li&gt;ATC&lt;/li&gt;
+&lt;li&gt;Sex&lt;/li&gt;
+&lt;li&gt;Age&lt;/li&gt;
+&lt;li&gt;Value&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;all_files_se[[1]] %&amp;gt;% slice(1:5)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 5 x 7
+##   Mått  År    Region `ATC­kod` Kön   Ålder Värde 
+##   &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; 
+## 1 3     2006  0      TOTALT   1     1     560858
+## 2 3     2006  0      TOTALT   1     2     413587
+## 3 3     2006  0      TOTALT   1     3     415480
+## 4 3     2006  0      TOTALT   1     4     474248
+## 5 3     2006  0      TOTALT   1     5     444933
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# Note the region coded as integer 0, 1, 2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Before moving forward, I want to combine drug utilization data with meta-data files.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# age
+all_files_se[[71]] %&amp;gt;% slice(1:5)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 5 x 2
+##   Ålder Text 
+##   &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;
+## 1 1     0-4  
+## 2 2     5-9  
+## 3 3     10-14
+## 4 4     15-19
+## 5 5     20-24
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# ATC codes
+all_files_se[[72]] %&amp;gt;% slice(1:5)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 5 x 2
+##   ATC    Text                                  
+##   &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;                                 
+## 1 TOTALT Samtliga (A - V)                      
+## 2 A      Matsmältningsorgan och ämnesomsättning
+## 3 A01    Medel vid mun- och tandsjukdomar      
+## 4 A01A   Medel vid mun- och tandsjukdomar      
+## 5 A01AA  Medel mot karies
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# Sex
+all_files_se[[73]] %&amp;gt;% slice(1:5)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 3 x 2
+##   Kön   Text      
+##   &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;     
+## 1 1     Män       
+## 2 2     Kvinnor   
+## 3 3     Båda könen
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# Characteristic/stats
+all_files_se[[74]] %&amp;gt;% slice(1:5)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 5 x 2
+##   Mått  Text                       
+##   &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;                      
+## 1 1     Antal patienter            
+## 2 2     Patienter/1000 invånare    
+## 3 3     Antal expedieringar        
+## 4 4     Expedieringar/1000 invånare
+## 5 9     Befolkning
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# Region
+all_files_se[[75]] %&amp;gt;% slice(1:5)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 5 x 2
+##   Region Text             
+##   &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;            
+## 1 00     Riket            
+## 2 01     Stockholms län   
+## 3 03     Uppsala län      
+## 4 04     Södermanlands län
+## 5 05     Östergötlands län
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# Note the region coded as 00, 01, 02 in the meta-data file and 0, 1, 2 in the files with stats
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I am not speaking Swedish and it takes a moment to remember what some of the columns mean and which values are sensible.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# recode regions so that the coding in the meta-data file matches the stats data
+all_files_se[[75]] %&amp;lt;&amp;gt;% mutate(Region = as.character(as.numeric(Region)))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# combine with meta-data
+data_se &amp;lt;- bind_rows(all_files_se[c(1:70)]) %&amp;gt;% 
+  # join with age groups labels
+  left_join(all_files_se[[71]]) %&amp;gt;% 
+  # rename joined column to age_group
+  rename(age_group = Text) %&amp;gt;% 
+  # rename ATCkod to ATC
+  rename(ATC = 4) %&amp;gt;% 
+  # keep only ATC codes of interest
+  filter(str_detect(string = ATC, pattern = all_regex)) %&amp;gt;% 
+  # join with drugs labels
+  left_join(all_files_se[[72]]) %&amp;gt;% 
+  # rename joined column
+  rename(drug = Text) %&amp;gt;% 
+  # join with sex labels
+  left_join(all_files_se[[73]]) %&amp;gt;% 
+  # rename joined column
+  rename(gender = Text) %&amp;gt;% 
+  # keep records on drug utilization in women
+  filter(gender == &amp;quot;Kvinnor&amp;quot;) %&amp;gt;% 
+  # join with characteristics&#39; labels
+  left_join(all_files_se[[74]]) %&amp;gt;% 
+  # rename characteristics&#39; labels column
+  rename(stat = Text) %&amp;gt;% 
+  # join with regions&#39; labels column
+  left_join(all_files_se[[75]]) %&amp;gt;% 
+  # rename regions&#39; labels column
+  rename(region_text = Text) %&amp;gt;% 
+  # keep stats for the whole country
+  filter(region_text == &amp;quot;Riket&amp;quot;) %&amp;gt;% 
+  # rename some of the columns in the dataset while selecting columns in the desired order
+  select(year = År,
+         region = region_text,
+         ATC,
+         values = Värde,
+         age_group,
+         drug,
+         gender,
+         stat)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;data_se %&amp;gt;% slice(1:5)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 5 x 8
+##   year  region ATC   values age_group drug         gender  stat               
+##   &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;     &amp;lt;chr&amp;gt;        &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt;              
+## 1 2006  Riket  N05A  3      0-4       Neuroleptika Kvinnor Antal expedieringar
+## 2 2006  Riket  N05A  138    5-9       Neuroleptika Kvinnor Antal expedieringar
+## 3 2006  Riket  N05A  922    10-14     Neuroleptika Kvinnor Antal expedieringar
+## 4 2006  Riket  N05A  6276   15-19     Neuroleptika Kvinnor Antal expedieringar
+## 5 2006  Riket  N05A  13139  20-24     Neuroleptika Kvinnor Antal expedieringar
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# pivot data into wide format so that each stat has its column
+data_se %&amp;lt;&amp;gt;% pivot_wider(names_from = stat, values_from = values) %&amp;gt;%
+  # format numbers using with dot as a decimal separator
+  mutate(
+    `Expedieringar/1000 invånare` = str_replace_all(string = `Expedieringar/1000 invånare`, pattern = &amp;quot;,&amp;quot;, replacement = &amp;quot;.&amp;quot;),
+    `Patienter/1000 invånare` = str_replace_all(string = `Patienter/1000 invånare`, pattern = &amp;quot;,&amp;quot;, replacement = &amp;quot;.&amp;quot;),
+    `Expedieringar/1000 invånare` = as.numeric(`Expedieringar/1000 invånare`),
+    `Patienter/1000 invånare` = as.numeric(`Patienter/1000 invånare`)
+  ) %&amp;gt;% 
+  # all to numeric
+  mutate_at(vars(`Antal expedieringar`, `Antal patienter`, Befolkning, year), as.numeric)
+
+data_se %&amp;gt;% slice(1:5)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 5 x 11
+##    year region ATC   age_group drug  gender `Antal expedier… `Antal patiente…
+##   &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;     &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;             &amp;lt;dbl&amp;gt;            &amp;lt;dbl&amp;gt;
+## 1  2006 Riket  N05A  0-4       Neur… Kvinn…                3                2
+## 2  2006 Riket  N05A  5-9       Neur… Kvinn…              138               39
+## 3  2006 Riket  N05A  10-14     Neur… Kvinn…              922              222
+## 4  2006 Riket  N05A  15-19     Neur… Kvinn…             6276             1209
+## 5  2006 Riket  N05A  20-24     Neur… Kvinn…            13139             2102
+## # … with 3 more variables: Befolkning &amp;lt;dbl&amp;gt;, `Expedieringar/1000
+## #   invånare` &amp;lt;dbl&amp;gt;, `Patienter/1000 invånare` &amp;lt;dbl&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I will work with age categories between 20 and 54 years.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# age categories: check distinct, keep ages of interest
+ages_to_keep &amp;lt;- data_se %&amp;gt;% 
+  distinct(age_group) %&amp;gt;% 
+  filter(row_number() %in% 5:11) %&amp;gt;% 
+  pull()
+
+ages_to_keep
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;20-24&amp;quot; &amp;quot;25-29&amp;quot; &amp;quot;30-34&amp;quot; &amp;quot;35-39&amp;quot; &amp;quot;40-44&amp;quot; &amp;quot;45-49&amp;quot; &amp;quot;50-54&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# age_cat_1
+age_cat_1 &amp;lt;- data_se %&amp;gt;% 
+  distinct(age_group) %&amp;gt;% 
+  filter(row_number() %in% 5) %&amp;gt;% 
+  pull()
+
+age_cat_1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;20-24&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# age_cat_2
+age_cat_2 &amp;lt;- data_se %&amp;gt;% 
+  distinct(age_group) %&amp;gt;% 
+  filter(row_number() %in% 6:7) %&amp;gt;% 
+  pull()
+
+age_cat_2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;25-29&amp;quot; &amp;quot;30-34&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# age_cat_3
+age_cat_3 &amp;lt;- data_se %&amp;gt;% 
+  distinct(age_group) %&amp;gt;% 
+  filter(row_number() %in% 8:9) %&amp;gt;% 
+  pull()
+
+age_cat_3
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;35-39&amp;quot; &amp;quot;40-44&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# age_cat_4
+age_cat_4 &amp;lt;- data_se %&amp;gt;% 
+  distinct(age_group) %&amp;gt;% 
+  filter(row_number() %in% 10:11) %&amp;gt;% 
+  pull()
+
+age_cat_4
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;45-49&amp;quot; &amp;quot;50-54&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# final data
+data_se %&amp;lt;&amp;gt;%
+  filter(age_group %in% ages_to_keep) %&amp;gt;%
+  # group by year and ATC code to aggregate into age categories
+  mutate(
+    age_cat = case_when(
+      age_group %in% age_cat_1 ~ &amp;quot;20-24&amp;quot;,
+      age_group %in% age_cat_2 ~ &amp;quot;25-34&amp;quot;,
+      age_group %in% age_cat_3 ~ &amp;quot;35-44&amp;quot;,
+      age_group %in% age_cat_4 ~ &amp;quot;45-54&amp;quot;,
+      T ~ NA_character_
+    )
+  ) %&amp;gt;% 
+  # keep only relevant ages
+  filter(! is.na(age_cat)) %&amp;gt;% 
+  # to count number of women who received a prescription per ATC code, per age group, per year
+  group_by(ATC, year, age_cat) %&amp;gt;% 
+  mutate(
+    # number of patients in the numerator
+    numerator = sum(`Antal patienter`),
+    # population size in the denominator; denominator includes women of particular age category per year
+    denominator = sum(Befolkning),
+    patients_per_1000_inhabitants = numerator / denominator * 1000
+  ) %&amp;gt;% 
+  ungroup() %&amp;gt;% 
+  # keep ATC codes of interest only
+  filter(str_detect(string = ATC, pattern = all_regex))
+
+data_se %&amp;gt;% slice(1:5)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 5 x 15
+##    year region ATC   age_group drug  gender `Antal expedier… `Antal patiente…
+##   &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;     &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;             &amp;lt;dbl&amp;gt;            &amp;lt;dbl&amp;gt;
+## 1  2006 Riket  N05A  20-24     Neur… Kvinn…            13139             2102
+## 2  2006 Riket  N05A  25-29     Neur… Kvinn…            19561             2539
+## 3  2006 Riket  N05A  30-34     Neur… Kvinn…            27854             3330
+## 4  2006 Riket  N05A  35-39     Neur… Kvinn…            40778             4148
+## 5  2006 Riket  N05A  40-44     Neur… Kvinn…            57630             5328
+## # … with 7 more variables: Befolkning &amp;lt;dbl&amp;gt;, `Expedieringar/1000
+## #   invånare` &amp;lt;dbl&amp;gt;, `Patienter/1000 invånare` &amp;lt;dbl&amp;gt;, age_cat &amp;lt;chr&amp;gt;,
+## #   numerator &amp;lt;dbl&amp;gt;, denominator &amp;lt;dbl&amp;gt;, patients_per_1000_inhabitants &amp;lt;dbl&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;results&#34;&gt;Results&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;list_plots_se[[1]]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/Drug-utilization-part-i/2020-08-30-drug-utilization-in-Sweden-and-Denmark_files/figure-html/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; /&gt;
+Atidepressants utilization in Swedish women was increasing starting in 2010. In 2019, 104 Swedish women per 1000 female inhabitants aged between 20-24 had a prescription of any antidepressant; 166 Swedish women aged between 45 and 54 years per 1000 female inhabitants in this age category received any antidepressant prescription.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;list_plots_se[[2]]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/Drug-utilization-part-i/2020-08-30-drug-utilization-in-Sweden-and-Denmark_files/figure-html/unnamed-chunk-15-1.png&#34; width=&#34;672&#34; /&gt;
+Antipsychotics utilization among Swedish women has risen sharply since 2007 for women in the age categories 20-24 years and 25-34 years. In 2019, 15 Swedish women per 1000 aged between 20-24 years, 17 Swedish women per 1000 aged between 25-34 years, 18 Swedish women per 1000 aged between 35-44 years, and 21 Swedish women per 1000 aged between 45-54 years received antipsychotics prescription.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;list_plots_se[[3]]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/Drug-utilization-part-i/2020-08-30-drug-utilization-in-Sweden-and-Denmark_files/figure-html/unnamed-chunk-16-1.png&#34; width=&#34;672&#34; /&gt;
+Anxiolytics utilization among Swedish women between 20 and 54 years of age was increasing from the beginning of medication utilization data recording in 2006. Starting in 2015, the rates of anxiolytics utilization was decreasing in women of all investigated age categories. In 2019, anxiolytics utilization varied between 46 women per 1000 in age category 20-24 years and 73 women per 1000 in age category 45-54 years.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;list_plots_se[[4]]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/Drug-utilization-part-i/2020-08-30-drug-utilization-in-Sweden-and-Denmark_files/figure-html/unnamed-chunk-17-1.png&#34; width=&#34;672&#34; /&gt;
+Sedatives utilization among Swedish women was between 44 women per 1000 in age category 20-24 years and 101 women per 1000 in age category 45-54 years. The rates of sedatives utilization remained nearly unchanged between 2006 and 2019 for women aged 45-54 years and was increasing among women between 20 and 44 years of age.&lt;/p&gt;
+&lt;h1 id=&#34;data-caveats&#34;&gt;Data caveats&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;The data do not include medicines that are sold without prescription&lt;/li&gt;
+&lt;li&gt;No data on indication. Medication with the same ATC code with distinct indications will be aggregated&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Number of patients&amp;rdquo; is the number of individuals who received a drug prescription at least once during the calendar year. For some medications, the &amp;ldquo;number of patients&amp;rdquo; can exceed the actual size of the given population&lt;/li&gt;
+&lt;li&gt;The same individual may receive several prescriptions for different medications and therefore when summing over several drug groups, the same individual will be counted several times&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The whole list of aggregated data caveats to keep in mind for Swedish drug utilization data can be found 
+&lt;a href=&#34;https://sdb.socialstyrelsen.se/pages/listinfo.aspx?amne=lak&amp;amp;id=TOLKA&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Please leave your comments or questions via your preferred social media. All feedback is very much appreciated ✌&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Drug utilization in Sweden and Denmark: Part II</title>
+      <link>/post/drug-utilization-part-ii/2020-08-30-drug-utilization-in-sweden-and-denmark-part-ii/</link>
+      <pubDate>Sun, 30 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>/post/drug-utilization-part-ii/2020-08-30-drug-utilization-in-sweden-and-denmark-part-ii/</guid>
+      <description>&lt;p&gt;In this part, I will look into the Danish national trends on of sedatives, antidepressants, anti-psychotics and anxiolytics utilization in women. Then I&amp;rsquo;d like to compare Danish national trends with Swedish national trends from Part I.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(tidyverse)
+library(magrittr)
+library(wesanderson)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;First things first - uploading data.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;link_list_dk &amp;lt;- list(
+  &amp;quot;1996_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MTk5Nl9hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;1997_atc_code_data.txt&amp;quot;  = &amp;quot;https://medstat.dk/da/download/file/MTk5N19hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;1998_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MTk5OF9hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;1999_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MTk5OV9hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;2000_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MjAwMF9hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;2001_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MjAwMV9hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;2002_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MjAwMl9hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;2003_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MjAwM19hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;2004_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MjAwNF9hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;2006_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MjAwNl9hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;2007_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MjAwN19hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;2008_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MjAwOF9hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;2009_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MjAwOV9hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;2010_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MjAxMF9hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;2011_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MjAxMV9hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;2012_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MjAxMl9hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;2013_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MjAxM19hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;2014_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MjAxNF9hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;2015_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MjAxNV9hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;2016_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MjAxNl9hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;2017_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MjAxN19hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;2018_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MjAxOF9hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;2019_atc_code_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/MjAxOV9hdGNfY29kZV9kYXRhLnR4dA==&amp;quot;,
+  &amp;quot;atc_code_text.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/YXRjX2NvZGVfdGV4dC50eHQ=&amp;quot;,
+  &amp;quot;atc_groups.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/YXRjX2dyb3Vwcy50eHQ=&amp;quot;,
+  &amp;quot;population_data.txt&amp;quot; = &amp;quot;https://medstat.dk/da/download/file/cG9wdWxhdGlvbl9kYXRhLnR4dA==&amp;quot;
+)
+
+# ATC codes are stored in files
+seq_atc &amp;lt;- c(1:23)
+atc_code_data_list &amp;lt;- link_list_dk[seq_atc]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I will compile data on population size, which I may use to compute denominators for drug utilization per capita.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# age structure data
+# parse with column type character
+age_structure &amp;lt;- read_delim(link_list_dk[[&amp;quot;population_data.txt&amp;quot;]], delim = &amp;quot;;&amp;quot;, col_names = c(paste0(&amp;quot;V&amp;quot;, c(1:7))), col_types = cols(V1 = col_character(), V2 = col_character(), V3 = col_character(), V4 = col_character(), V5 = col_character(), V6 = col_character(), V7 = col_character())) %&amp;gt;%
+  # rename and keep columns
+  select(year = V1,
+         region_text = V2,
+         region = V3,
+         gender = V4,
+         age = V5,
+         denominator_per_year = V6) %&amp;gt;% 
+  # human-reading friendly label on sex categories
+  mutate(
+      gender_text = case_when(
+      gender == &amp;quot;0&amp;quot; ~ &amp;quot;both sexes&amp;quot;,
+      gender == &amp;quot;1&amp;quot; ~ &amp;quot;men&amp;quot;,
+      gender == &amp;quot;2&amp;quot; ~ &amp;quot;women&amp;quot;,
+      T ~ as.character(gender)
+    )
+  ) %&amp;gt;% 
+  # make numeric variables
+  mutate_at(vars(year, age, denominator_per_year), as.numeric) %&amp;gt;% 
+  # keep only data for the age categories I will work with and only on women
+  filter(age %in% 20:54, gender == &amp;quot;2&amp;quot;) %&amp;gt;% 
+  arrange(year, age, region, gender)
+
+age_structure %&amp;gt;% slice(1:10)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 10 x 7
+##     year region_text region gender   age denominator_per_year gender_text
+##    &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;  &amp;lt;dbl&amp;gt;                &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt;      
+##  1  1996 DK          0      2         20                36363 women      
+##  2  1996 DK          0      2         21                36366 women      
+##  3  1996 DK          0      2         22                36498 women      
+##  4  1996 DK          0      2         23                38452 women      
+##  5  1996 DK          0      2         24                37873 women      
+##  6  1996 DK          0      2         25                36383 women      
+##  7  1996 DK          0      2         26                36115 women      
+##  8  1996 DK          0      2         27                37514 women      
+##  9  1996 DK          0      2         28                40669 women      
+## 10  1996 DK          0      2         29                43619 women
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Danish data has a handy file with all drug classes in English, which I intend to use as labels later on.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;eng_drug &amp;lt;- read_delim(link_list_dk[[&amp;quot;atc_groups.txt&amp;quot;]], delim = &amp;quot;;&amp;quot;, col_names = c(paste0(&amp;quot;V&amp;quot;, c(1:6))), col_types = cols(V1 = col_character(), V2 = col_character(), V3 = col_character(), V4 = col_character(), V5 = col_character(), V6 = col_character())) %&amp;gt;% 
+  # keep drug classes labels in English
+  filter(V5 == &amp;quot;1&amp;quot;) %&amp;gt;% 
+  select(ATC = V1,
+         drug = V2,
+         unit_dk = V4)
+
+eng_drug %&amp;gt;% slice(1:10)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 10 x 3
+##    ATC     drug                                    unit_dk                  
+##    &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt;                                   &amp;lt;chr&amp;gt;                    
+##  1 A       Alimentary tract and metabolism         No common unit for volume
+##  2 A01     Stomatological preparations             No common unit for volume
+##  3 A01A    Stomatological preparations             No common unit for volume
+##  4 A01AA   Caries prophylactic agents              Packages                 
+##  5 A01AA01 Sodium fluoride                         Packages                 
+##  6 A01AB   Antiinfectives for local oral treatment No common unit for volume
+##  7 A01AB02 Hydrogenperoxide                        &amp;lt;NA&amp;gt;                     
+##  8 A01AB03 Chlorhexidine                           DDD                      
+##  9 A01AB04 Amphotericin                            DDD                      
+## 10 A01AB09 Miconazole                              DDD
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I keep only ATC codes I am interested in. I use &lt;code&gt;$&lt;/code&gt; in the end of each regular expression (regex) to make sure that I capture the widest ATC code category, which already encompasses all the subcategories. Hypnotics and sedatives - N05C already aggregates N05CA, N05CB, N05CC, N05CD, N05CE, N05CF, N05CH ATC codes.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;regex_antidepress &amp;lt;- &amp;quot;^N06A$&amp;quot;
+regex_antipsych &amp;lt;- &amp;quot;^N05A$&amp;quot;
+regex_anxiolyt &amp;lt;- &amp;quot;^N05B$&amp;quot;
+regex_sedat &amp;lt;- &amp;quot;^N05C$&amp;quot;
+
+# combine all ATC codes in one regex string
+all_regex &amp;lt;- paste(regex_antidepress, regex_antipsych, regex_anxiolyt, regex_sedat, sep = &amp;quot;|&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# ATC data
+atc_data &amp;lt;- map(atc_code_data_list, ~read_delim(file = .x, delim = &amp;quot;;&amp;quot;, trim_ws = T, col_names = c(paste0(&amp;quot;V&amp;quot;, c(1:14))), col_types = cols(V1 = col_character(), V2 = col_character(), V3 = col_character(), V4 = col_character(), V5 = col_character(),V6 = col_character(), V7 = col_character(), V8 = col_character(), V9 = col_character(), V10 = col_character(), V11 = col_character(), V12 = col_character(), V13 = col_character(), V14 = col_character()))) %&amp;gt;% 
+  # bind data from all years
+  bind_rows() 
+
+# age categories: in 6 year bands and in each year
+age_cat_in_6 &amp;lt;- atc_data %&amp;gt;% distinct(V6) %&amp;gt;% filter(row_number() %in% 2:7) %&amp;gt;% pull()
+age_cat_in_6
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;00-17&amp;quot; &amp;quot;18-24&amp;quot; &amp;quot;25-44&amp;quot; &amp;quot;45-64&amp;quot; &amp;quot;65-79&amp;quot; &amp;quot;80+&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;age_in_years &amp;lt;- atc_data %&amp;gt;% distinct(V6) %&amp;gt;% filter(row_number() %in% 8:103) %&amp;gt;% pull()
+age_in_years
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;000&amp;quot; &amp;quot;001&amp;quot; &amp;quot;002&amp;quot; &amp;quot;003&amp;quot; &amp;quot;004&amp;quot; &amp;quot;005&amp;quot; &amp;quot;006&amp;quot; &amp;quot;007&amp;quot; &amp;quot;008&amp;quot; &amp;quot;009&amp;quot; &amp;quot;010&amp;quot; &amp;quot;011&amp;quot;
+## [13] &amp;quot;012&amp;quot; &amp;quot;013&amp;quot; &amp;quot;014&amp;quot; &amp;quot;015&amp;quot; &amp;quot;016&amp;quot; &amp;quot;017&amp;quot; &amp;quot;018&amp;quot; &amp;quot;019&amp;quot; &amp;quot;020&amp;quot; &amp;quot;021&amp;quot; &amp;quot;022&amp;quot; &amp;quot;023&amp;quot;
+## [25] &amp;quot;024&amp;quot; &amp;quot;025&amp;quot; &amp;quot;026&amp;quot; &amp;quot;027&amp;quot; &amp;quot;028&amp;quot; &amp;quot;029&amp;quot; &amp;quot;030&amp;quot; &amp;quot;031&amp;quot; &amp;quot;032&amp;quot; &amp;quot;033&amp;quot; &amp;quot;034&amp;quot; &amp;quot;035&amp;quot;
+## [37] &amp;quot;036&amp;quot; &amp;quot;037&amp;quot; &amp;quot;038&amp;quot; &amp;quot;039&amp;quot; &amp;quot;040&amp;quot; &amp;quot;041&amp;quot; &amp;quot;042&amp;quot; &amp;quot;043&amp;quot; &amp;quot;044&amp;quot; &amp;quot;045&amp;quot; &amp;quot;046&amp;quot; &amp;quot;047&amp;quot;
+## [49] &amp;quot;048&amp;quot; &amp;quot;049&amp;quot; &amp;quot;050&amp;quot; &amp;quot;051&amp;quot; &amp;quot;052&amp;quot; &amp;quot;053&amp;quot; &amp;quot;054&amp;quot; &amp;quot;055&amp;quot; &amp;quot;056&amp;quot; &amp;quot;057&amp;quot; &amp;quot;058&amp;quot; &amp;quot;059&amp;quot;
+## [61] &amp;quot;060&amp;quot; &amp;quot;061&amp;quot; &amp;quot;062&amp;quot; &amp;quot;063&amp;quot; &amp;quot;064&amp;quot; &amp;quot;065&amp;quot; &amp;quot;066&amp;quot; &amp;quot;067&amp;quot; &amp;quot;068&amp;quot; &amp;quot;069&amp;quot; &amp;quot;070&amp;quot; &amp;quot;071&amp;quot;
+## [73] &amp;quot;072&amp;quot; &amp;quot;073&amp;quot; &amp;quot;074&amp;quot; &amp;quot;075&amp;quot; &amp;quot;076&amp;quot; &amp;quot;077&amp;quot; &amp;quot;078&amp;quot; &amp;quot;079&amp;quot; &amp;quot;080&amp;quot; &amp;quot;081&amp;quot; &amp;quot;082&amp;quot; &amp;quot;083&amp;quot;
+## [85] &amp;quot;084&amp;quot; &amp;quot;085&amp;quot; &amp;quot;086&amp;quot; &amp;quot;087&amp;quot; &amp;quot;088&amp;quot; &amp;quot;089&amp;quot; &amp;quot;090&amp;quot; &amp;quot;091&amp;quot; &amp;quot;092&amp;quot; &amp;quot;093&amp;quot; &amp;quot;094&amp;quot; &amp;quot;95+&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# clean dataset
+atc_data %&amp;lt;&amp;gt;% 
+  # rename and keep columns
+  rename(
+    ATC = V1,
+    year = V2,
+    sector = V3,
+    region = V4,
+    gender = V5, # 0 - both; 1 - male; 2 - female
+    age = V6,
+    number_of_people = V7,
+    patients_per_1000_inhabitants = V8,
+    turnover = V9,
+    regional_grant_paid = V10,
+    quantity_sold_1000_units = V11,
+    quantity_sold_units_per_unit_1000_inhabitants_per_day = V12,
+    percentage_of_sales_in_the_primary_sector = V13
+  ) %&amp;gt;% 
+  # clean columns names and set-up labels
+  mutate(
+    year = as.numeric(year),
+    region_text = case_when(
+      region == &amp;quot;0&amp;quot; ~ &amp;quot;DK&amp;quot;,
+      region == &amp;quot;1&amp;quot; ~ &amp;quot;Region Hovedstaden&amp;quot;,
+      region == &amp;quot;2&amp;quot; ~ &amp;quot;Region Midtjylland&amp;quot;,
+      region == &amp;quot;3&amp;quot; ~ &amp;quot;Region Nordjylland&amp;quot;,
+      region == &amp;quot;4&amp;quot; ~ &amp;quot;Region Sjælland&amp;quot;,
+      region == &amp;quot;5&amp;quot; ~ &amp;quot;Region Syddanmark&amp;quot;,
+      T ~ NA_character_
+    ),
+    gender_text = case_when(
+      gender == &amp;quot;0&amp;quot; ~ &amp;quot;both sexes&amp;quot;,
+      gender == &amp;quot;1&amp;quot; ~ &amp;quot;men&amp;quot;,
+      gender == &amp;quot;2&amp;quot; ~ &amp;quot;women&amp;quot;,
+      T ~ as.character(gender)
+    ),
+    age_cats = case_when(
+      age %in% &amp;quot;A&amp;quot; ~ &amp;quot;A&amp;quot;,
+      age %in% age_cat_in_6 ~ &amp;quot;6 years&amp;quot;,
+      age %in% age_in_years ~ &amp;quot;yearly categories&amp;quot;,
+      age %in% &amp;quot;T&amp;quot; ~ &amp;quot;T&amp;quot;,
+      T ~ NA_character_
+    )
+  ) %&amp;gt;% 
+  mutate_at(vars(turnover, regional_grant_paid, quantity_sold_1000_units, quantity_sold_units_per_unit_1000_inhabitants_per_day, number_of_people, patients_per_1000_inhabitants), as.numeric) %&amp;gt;% 
+  select(-V14) %&amp;gt;%
+  filter(
+  age_cats == &amp;quot;yearly categories&amp;quot;,
+  gender == &amp;quot;2&amp;quot;,
+  region == &amp;quot;0&amp;quot;,
+  sector ==&amp;quot;0&amp;quot;
+) %&amp;gt;% 
+  filter(str_detect(ATC, all_regex)) %&amp;gt;% 
+  # deal with non-numeric age and re-code as numeric
+  mutate(
+    age = case_when(
+      age == &amp;quot;95+&amp;quot; ~ &amp;quot;95&amp;quot;,
+      T ~ as.character(age)
+    ),
+    age = as.numeric(age)
+    ) %&amp;gt;% 
+  filter(age %in% 20:54) %&amp;gt;% 
+  mutate(
+    age_cat = case_when(
+      age %in% 20:24 ~ &amp;quot;20-24&amp;quot;,
+      age %in% 25:34 ~ &amp;quot;25-34&amp;quot;,
+      age %in% 35:44 ~ &amp;quot;35-44&amp;quot;,
+      age %in% 45:54 ~ &amp;quot;45-54&amp;quot;,
+      T ~ NA_character_
+    )
+) %&amp;gt;% 
+  left_join(age_structure) %&amp;gt;% 
+  group_by(ATC, year, age_cat) %&amp;gt;% 
+  mutate(
+    numerator = sum(number_of_people),
+    denominator = sum(denominator_per_year),
+    patients_per_1000_inhabitants = numerator / denominator * 1000
+  ) %&amp;gt;% 
+  filter(row_number() == 1) %&amp;gt;% 
+  ungroup() %&amp;gt;% 
+  select(year, ATC, gender, age_cat, patients_per_1000_inhabitants) %&amp;gt;% 
+  mutate(
+    country = &amp;quot;Denmark&amp;quot;
+  )
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Joining, by = c(&amp;quot;year&amp;quot;, &amp;quot;region&amp;quot;, &amp;quot;gender&amp;quot;, &amp;quot;age&amp;quot;, &amp;quot;region_text&amp;quot;, &amp;quot;gender_text&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;atc_data %&amp;gt;% slice(1:10)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 10 x 6
+##     year ATC   gender age_cat patients_per_1000_inhabitants country
+##    &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;                           &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt;  
+##  1  1999 N05A  2      20-24                            5.60 Denmark
+##  2  1999 N05A  2      25-34                            9.71 Denmark
+##  3  1999 N05A  2      35-44                           19.9  Denmark
+##  4  1999 N05A  2      45-54                           29.4  Denmark
+##  5  1999 N05B  2      20-24                           12.5  Denmark
+##  6  1999 N05B  2      25-34                           26.3  Denmark
+##  7  1999 N05B  2      35-44                           61.7  Denmark
+##  8  1999 N05B  2      45-54                          106.   Denmark
+##  9  1999 N05C  2      20-24                            7.86 Denmark
+## 10  1999 N05C  2      25-34                           18.0  Denmark
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# combine Swedish data from previous post and Danish data
+data &amp;lt;- data_se %&amp;gt;% 
+  select(year, ATC, gender, age_cat, patients_per_1000_inhabitants) %&amp;gt;% 
+  mutate(
+    country = &amp;quot;Sweden&amp;quot;
+  ) %&amp;gt;% 
+  full_join(atc_data) %&amp;gt;% 
+  # join with ATC classes labels in English
+  left_join(eng_drug)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Joining, by = c(&amp;quot;year&amp;quot;, &amp;quot;ATC&amp;quot;, &amp;quot;gender&amp;quot;, &amp;quot;age_cat&amp;quot;, &amp;quot;patients_per_1000_inhabitants&amp;quot;, &amp;quot;country&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Joining, by = &amp;quot;ATC&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To avoid copy-pasting the same ggplot code, I use a wrapper around the plotting function.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;plot_utilization &amp;lt;- function(data, drug_regex, title){
+  data %&amp;gt;% 
+  filter(str_detect(ATC, {{ drug_regex }})) %&amp;gt;% 
+  group_by(country) %&amp;gt;% 
+  ggplot(aes(x = year, y = patients_per_1000_inhabitants, color = country)) +
+  geom_path(position = position_dodge(width = 1)) +
+  facet_grid(rows = vars(drug, ATC), cols = vars(age_cat), scales = &amp;quot;free&amp;quot;, drop = T) +
+  theme_light(base_size = 15) +
+  scale_x_continuous(breaks = c(seq(1999, 2019, 10))) +
+  scale_color_manual(values = wes_palette(name = &amp;quot;GrandBudapest1&amp;quot;, type = &amp;quot;discrete&amp;quot;)) +
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = &amp;quot;bottom&amp;quot;,
+        panel.spacing = unit(0.8, &amp;quot;cm&amp;quot;)) +
+  labs(y = &amp;quot;Female patients\nper 1,000 women in the population&amp;quot;, title = paste0(title, &amp;quot; utilization in Swedish and Danish women&amp;quot;), subtitle = &amp;quot;aged between 20 and 54 years&amp;quot;)
+}
+
+list_regex &amp;lt;- list(regex_antidepress, regex_antipsych, regex_anxiolyt, regex_sedat)
+list_title &amp;lt;- list(&amp;quot;Antidepressants&amp;quot;, &amp;quot;Antipsychotics&amp;quot;, &amp;quot;Anxiolytics&amp;quot;, &amp;quot;Sedatives&amp;quot;)
+list_plots &amp;lt;- map2(list_regex, list_title, ~plot_utilization(data = data, drug_regex = .x, title = .y))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;results&#34;&gt;Results&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;list_plots[[1]]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/Drug-utilization-part-ii/2020-08-30-drug-utilization-in-Sweden-and-Denmark-part-ii_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; /&gt;
+Among Danish women aged between 20 and 54 years, antidepressants utilizatioin was steadily decreasing, while utilization among Swedish women was increasing. In Denmark, 56 women aged between 20-24 and 72 women aged between 35-45 56 per 1000 women in the population received antidepressants prescription.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;list_plots[[2]]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/Drug-utilization-part-ii/2020-08-30-drug-utilization-in-Sweden-and-Denmark-part-ii_files/figure-html/unnamed-chunk-12-1.png&#34; width=&#34;672&#34; /&gt;
+Antipsychotics utilization was increasing over the years in both Denmark and Sweden. The rates of antipsychotics utilization were higher among Danish women when compared to Swedish women in the same age categories.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;list_plots[[3]]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/Drug-utilization-part-ii/2020-08-30-drug-utilization-in-Sweden-and-Denmark-part-ii_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; /&gt;
+Anxiolytics utilization rates were higher among Swedish women. In Denmark, anxiolytics utilization was decreasing since 1999 until 2019 for women in all age categories between 20 and 54 years.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;list_plots[[4]]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/Drug-utilization-part-ii/2020-08-30-drug-utilization-in-Sweden-and-Denmark-part-ii_files/figure-html/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; /&gt;
+The rates of sedatives utilization were higher for Swedish women when compared with Danish women of the same age groups. Utilization of sedatives among Danish women was below 50 women per 1000 women of the same age group in the population in all investigated age categories. Among Swedish women, the rate of sedatives utilization was below 50 women per 1000 women in the population only for women between 20 and 24 years of age.&lt;/p&gt;
+&lt;h1 id=&#34;take-home-message&#34;&gt;Take home message&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Countries similar in many ways may exhibit different data patterns&lt;/li&gt;
+&lt;li&gt;Antidepressants, antipsychotics, anxiolytics, and sedatives utilization among Danish and Swedish women is far from identical&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Thanks for tuning in 🤓&lt;/p&gt;
+&lt;p&gt;All feedback is appreciated ✌️&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

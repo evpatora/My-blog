@@ -1,0 +1,1007 @@
+{
+  "data": [
+    {
+      "x": [
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011,
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019
+      ],
+      "y": [
+        8.15424004965474,
+        7.17964253256589,
+        7.99176939611618,
+        8.36951422958498,
+        8.96779163907173,
+        9.46232383541252,
+        9.80586401990106,
+        10.5289346057332,
+        11.3644679709226,
+        12.2099673952273,
+        12.2230950510605,
+        13.1777278931808,
+        13.9718343959325,
+        14.726368159204
+      ],
+      "text": [
+        "year: 2006<br />patients_per_1000_inhabitants:  8.154240<br />age_cat: 20-24",
+        "year: 2007<br />patients_per_1000_inhabitants:  7.179643<br />age_cat: 20-24",
+        "year: 2008<br />patients_per_1000_inhabitants:  7.991769<br />age_cat: 20-24",
+        "year: 2009<br />patients_per_1000_inhabitants:  8.369514<br />age_cat: 20-24",
+        "year: 2010<br />patients_per_1000_inhabitants:  8.967792<br />age_cat: 20-24",
+        "year: 2011<br />patients_per_1000_inhabitants:  9.462324<br />age_cat: 20-24",
+        "year: 2012<br />patients_per_1000_inhabitants:  9.805864<br />age_cat: 20-24",
+        "year: 2013<br />patients_per_1000_inhabitants: 10.528935<br />age_cat: 20-24",
+        "year: 2014<br />patients_per_1000_inhabitants: 11.364468<br />age_cat: 20-24",
+        "year: 2015<br />patients_per_1000_inhabitants: 12.209967<br />age_cat: 20-24",
+        "year: 2016<br />patients_per_1000_inhabitants: 12.223095<br />age_cat: 20-24",
+        "year: 2017<br />patients_per_1000_inhabitants: 13.177728<br />age_cat: 20-24",
+        "year: 2018<br />patients_per_1000_inhabitants: 13.971834<br />age_cat: 20-24",
+        "year: 2019<br />patients_per_1000_inhabitants: 14.726368<br />age_cat: 20-24"
+      ],
+      "type": "scatter",
+      "mode": "lines",
+      "line": {
+        "width": 1.88976377952756,
+        "color": "rgba(230,160,196,1)",
+        "dash": "solid"
+      },
+      "hoveron": "points",
+      "name": "20-24",
+      "legendgroup": "20-24",
+      "showlegend": true,
+      "xaxis": "x",
+      "yaxis": "y",
+      "hoverinfo": "text",
+      "frame": null
+    },
+    {
+      "x": [
+        2006,
+        2006,
+        2007,
+        2007,
+        2008,
+        2008,
+        2009,
+        2009,
+        2010,
+        2010,
+        2011,
+        2011,
+        2012,
+        2012,
+        2013,
+        2013,
+        2014,
+        2014,
+        2015,
+        2015,
+        2016,
+        2016,
+        2017,
+        2017,
+        2018,
+        2018,
+        2019,
+        2019
+      ],
+      "y": [
+        10.3514264297368,
+        10.3514264297368,
+        8.95822509402413,
+        8.95822509402413,
+        9.21956892237718,
+        9.21956892237718,
+        10.0324316618554,
+        10.0324316618554,
+        10.7787092931251,
+        10.7787092931251,
+        11.3844732499259,
+        11.3844732499259,
+        12.1070425962784,
+        12.1070425962784,
+        12.9950072980752,
+        12.9950072980752,
+        14.080807543456,
+        14.080807543456,
+        14.9562372982908,
+        14.9562372982908,
+        15.5604063073783,
+        15.5604063073783,
+        16.1929030540448,
+        16.1929030540448,
+        16.73904682188,
+        16.73904682188,
+        17.4194753325863,
+        17.4194753325863
+      ],
+      "text": [
+        "year: 2006<br />patients_per_1000_inhabitants: 10.351426<br />age_cat: 25-34",
+        "year: 2006<br />patients_per_1000_inhabitants: 10.351426<br />age_cat: 25-34",
+        "year: 2007<br />patients_per_1000_inhabitants:  8.958225<br />age_cat: 25-34",
+        "year: 2007<br />patients_per_1000_inhabitants:  8.958225<br />age_cat: 25-34",
+        "year: 2008<br />patients_per_1000_inhabitants:  9.219569<br />age_cat: 25-34",
+        "year: 2008<br />patients_per_1000_inhabitants:  9.219569<br />age_cat: 25-34",
+        "year: 2009<br />patients_per_1000_inhabitants: 10.032432<br />age_cat: 25-34",
+        "year: 2009<br />patients_per_1000_inhabitants: 10.032432<br />age_cat: 25-34",
+        "year: 2010<br />patients_per_1000_inhabitants: 10.778709<br />age_cat: 25-34",
+        "year: 2010<br />patients_per_1000_inhabitants: 10.778709<br />age_cat: 25-34",
+        "year: 2011<br />patients_per_1000_inhabitants: 11.384473<br />age_cat: 25-34",
+        "year: 2011<br />patients_per_1000_inhabitants: 11.384473<br />age_cat: 25-34",
+        "year: 2012<br />patients_per_1000_inhabitants: 12.107043<br />age_cat: 25-34",
+        "year: 2012<br />patients_per_1000_inhabitants: 12.107043<br />age_cat: 25-34",
+        "year: 2013<br />patients_per_1000_inhabitants: 12.995007<br />age_cat: 25-34",
+        "year: 2013<br />patients_per_1000_inhabitants: 12.995007<br />age_cat: 25-34",
+        "year: 2014<br />patients_per_1000_inhabitants: 14.080808<br />age_cat: 25-34",
+        "year: 2014<br />patients_per_1000_inhabitants: 14.080808<br />age_cat: 25-34",
+        "year: 2015<br />patients_per_1000_inhabitants: 14.956237<br />age_cat: 25-34",
+        "year: 2015<br />patients_per_1000_inhabitants: 14.956237<br />age_cat: 25-34",
+        "year: 2016<br />patients_per_1000_inhabitants: 15.560406<br />age_cat: 25-34",
+        "year: 2016<br />patients_per_1000_inhabitants: 15.560406<br />age_cat: 25-34",
+        "year: 2017<br />patients_per_1000_inhabitants: 16.192903<br />age_cat: 25-34",
+        "year: 2017<br />patients_per_1000_inhabitants: 16.192903<br />age_cat: 25-34",
+        "year: 2018<br />patients_per_1000_inhabitants: 16.739047<br />age_cat: 25-34",
+        "year: 2018<br />patients_per_1000_inhabitants: 16.739047<br />age_cat: 25-34",
+        "year: 2019<br />patients_per_1000_inhabitants: 17.419475<br />age_cat: 25-34",
+        "year: 2019<br />patients_per_1000_inhabitants: 17.419475<br />age_cat: 25-34"
+      ],
+      "type": "scatter",
+      "mode": "lines",
+      "line": {
+        "width": 1.88976377952756,
+        "color": "rgba(198,205,247,1)",
+        "dash": "solid"
+      },
+      "hoveron": "points",
+      "name": "25-34",
+      "legendgroup": "25-34",
+      "showlegend": true,
+      "xaxis": "x2",
+      "yaxis": "y",
+      "hoverinfo": "text",
+      "frame": null
+    },
+    {
+      "x": [
+        2006,
+        2006,
+        2007,
+        2007,
+        2008,
+        2008,
+        2009,
+        2009,
+        2010,
+        2010,
+        2011,
+        2011,
+        2012,
+        2012,
+        2013,
+        2013,
+        2014,
+        2014,
+        2015,
+        2015,
+        2016,
+        2016,
+        2017,
+        2017,
+        2018,
+        2018,
+        2019,
+        2019
+      ],
+      "y": [
+        15.1826127360267,
+        15.1826127360267,
+        13.6336335384532,
+        13.6336335384532,
+        13.4919711609509,
+        13.4919711609509,
+        13.4878017842797,
+        13.4878017842797,
+        13.8440225483105,
+        13.8440225483105,
+        14.0845515756391,
+        14.0845515756391,
+        14.2534207730588,
+        14.2534207730588,
+        15.0560970410991,
+        15.0560970410991,
+        15.9730446748124,
+        15.9730446748124,
+        16.7961505038845,
+        16.7961505038845,
+        16.9907735753648,
+        16.9907735753648,
+        17.3638490725466,
+        17.3638490725466,
+        17.6941897106678,
+        17.6941897106678,
+        18.119379258623,
+        18.119379258623
+      ],
+      "text": [
+        "year: 2006<br />patients_per_1000_inhabitants: 15.182613<br />age_cat: 35-44",
+        "year: 2006<br />patients_per_1000_inhabitants: 15.182613<br />age_cat: 35-44",
+        "year: 2007<br />patients_per_1000_inhabitants: 13.633634<br />age_cat: 35-44",
+        "year: 2007<br />patients_per_1000_inhabitants: 13.633634<br />age_cat: 35-44",
+        "year: 2008<br />patients_per_1000_inhabitants: 13.491971<br />age_cat: 35-44",
+        "year: 2008<br />patients_per_1000_inhabitants: 13.491971<br />age_cat: 35-44",
+        "year: 2009<br />patients_per_1000_inhabitants: 13.487802<br />age_cat: 35-44",
+        "year: 2009<br />patients_per_1000_inhabitants: 13.487802<br />age_cat: 35-44",
+        "year: 2010<br />patients_per_1000_inhabitants: 13.844023<br />age_cat: 35-44",
+        "year: 2010<br />patients_per_1000_inhabitants: 13.844023<br />age_cat: 35-44",
+        "year: 2011<br />patients_per_1000_inhabitants: 14.084552<br />age_cat: 35-44",
+        "year: 2011<br />patients_per_1000_inhabitants: 14.084552<br />age_cat: 35-44",
+        "year: 2012<br />patients_per_1000_inhabitants: 14.253421<br />age_cat: 35-44",
+        "year: 2012<br />patients_per_1000_inhabitants: 14.253421<br />age_cat: 35-44",
+        "year: 2013<br />patients_per_1000_inhabitants: 15.056097<br />age_cat: 35-44",
+        "year: 2013<br />patients_per_1000_inhabitants: 15.056097<br />age_cat: 35-44",
+        "year: 2014<br />patients_per_1000_inhabitants: 15.973045<br />age_cat: 35-44",
+        "year: 2014<br />patients_per_1000_inhabitants: 15.973045<br />age_cat: 35-44",
+        "year: 2015<br />patients_per_1000_inhabitants: 16.796151<br />age_cat: 35-44",
+        "year: 2015<br />patients_per_1000_inhabitants: 16.796151<br />age_cat: 35-44",
+        "year: 2016<br />patients_per_1000_inhabitants: 16.990774<br />age_cat: 35-44",
+        "year: 2016<br />patients_per_1000_inhabitants: 16.990774<br />age_cat: 35-44",
+        "year: 2017<br />patients_per_1000_inhabitants: 17.363849<br />age_cat: 35-44",
+        "year: 2017<br />patients_per_1000_inhabitants: 17.363849<br />age_cat: 35-44",
+        "year: 2018<br />patients_per_1000_inhabitants: 17.694190<br />age_cat: 35-44",
+        "year: 2018<br />patients_per_1000_inhabitants: 17.694190<br />age_cat: 35-44",
+        "year: 2019<br />patients_per_1000_inhabitants: 18.119379<br />age_cat: 35-44",
+        "year: 2019<br />patients_per_1000_inhabitants: 18.119379<br />age_cat: 35-44"
+      ],
+      "type": "scatter",
+      "mode": "lines",
+      "line": {
+        "width": 1.88976377952756,
+        "color": "rgba(216,164,153,1)",
+        "dash": "solid"
+      },
+      "hoveron": "points",
+      "name": "35-44",
+      "legendgroup": "35-44",
+      "showlegend": true,
+      "xaxis": "x3",
+      "yaxis": "y",
+      "hoverinfo": "text",
+      "frame": null
+    },
+    {
+      "x": [
+        2006,
+        2006,
+        2007,
+        2007,
+        2008,
+        2008,
+        2009,
+        2009,
+        2010,
+        2010,
+        2011,
+        2011,
+        2012,
+        2012,
+        2013,
+        2013,
+        2014,
+        2014,
+        2015,
+        2015,
+        2016,
+        2016,
+        2017,
+        2017,
+        2018,
+        2018,
+        2019,
+        2019
+      ],
+      "y": [
+        20.75148479552,
+        20.75148479552,
+        19.0090684826795,
+        19.0090684826795,
+        18.4755588078075,
+        18.4755588078075,
+        19.0716115777596,
+        19.0716115777596,
+        19.5339296522967,
+        19.5339296522967,
+        19.7433594803021,
+        19.7433594803021,
+        19.7075765442729,
+        19.7075765442729,
+        19.7109530784027,
+        19.7109530784027,
+        19.9540205117317,
+        19.9540205117317,
+        20.2489837797579,
+        20.2489837797579,
+        20.4595867977995,
+        20.4595867977995,
+        20.2624525505833,
+        20.2624525505833,
+        20.4674771787629,
+        20.4674771787629,
+        20.4715435142791,
+        20.4715435142791
+      ],
+      "text": [
+        "year: 2006<br />patients_per_1000_inhabitants: 20.751485<br />age_cat: 45-54",
+        "year: 2006<br />patients_per_1000_inhabitants: 20.751485<br />age_cat: 45-54",
+        "year: 2007<br />patients_per_1000_inhabitants: 19.009068<br />age_cat: 45-54",
+        "year: 2007<br />patients_per_1000_inhabitants: 19.009068<br />age_cat: 45-54",
+        "year: 2008<br />patients_per_1000_inhabitants: 18.475559<br />age_cat: 45-54",
+        "year: 2008<br />patients_per_1000_inhabitants: 18.475559<br />age_cat: 45-54",
+        "year: 2009<br />patients_per_1000_inhabitants: 19.071612<br />age_cat: 45-54",
+        "year: 2009<br />patients_per_1000_inhabitants: 19.071612<br />age_cat: 45-54",
+        "year: 2010<br />patients_per_1000_inhabitants: 19.533930<br />age_cat: 45-54",
+        "year: 2010<br />patients_per_1000_inhabitants: 19.533930<br />age_cat: 45-54",
+        "year: 2011<br />patients_per_1000_inhabitants: 19.743359<br />age_cat: 45-54",
+        "year: 2011<br />patients_per_1000_inhabitants: 19.743359<br />age_cat: 45-54",
+        "year: 2012<br />patients_per_1000_inhabitants: 19.707577<br />age_cat: 45-54",
+        "year: 2012<br />patients_per_1000_inhabitants: 19.707577<br />age_cat: 45-54",
+        "year: 2013<br />patients_per_1000_inhabitants: 19.710953<br />age_cat: 45-54",
+        "year: 2013<br />patients_per_1000_inhabitants: 19.710953<br />age_cat: 45-54",
+        "year: 2014<br />patients_per_1000_inhabitants: 19.954021<br />age_cat: 45-54",
+        "year: 2014<br />patients_per_1000_inhabitants: 19.954021<br />age_cat: 45-54",
+        "year: 2015<br />patients_per_1000_inhabitants: 20.248984<br />age_cat: 45-54",
+        "year: 2015<br />patients_per_1000_inhabitants: 20.248984<br />age_cat: 45-54",
+        "year: 2016<br />patients_per_1000_inhabitants: 20.459587<br />age_cat: 45-54",
+        "year: 2016<br />patients_per_1000_inhabitants: 20.459587<br />age_cat: 45-54",
+        "year: 2017<br />patients_per_1000_inhabitants: 20.262453<br />age_cat: 45-54",
+        "year: 2017<br />patients_per_1000_inhabitants: 20.262453<br />age_cat: 45-54",
+        "year: 2018<br />patients_per_1000_inhabitants: 20.467477<br />age_cat: 45-54",
+        "year: 2018<br />patients_per_1000_inhabitants: 20.467477<br />age_cat: 45-54",
+        "year: 2019<br />patients_per_1000_inhabitants: 20.471544<br />age_cat: 45-54",
+        "year: 2019<br />patients_per_1000_inhabitants: 20.471544<br />age_cat: 45-54"
+      ],
+      "type": "scatter",
+      "mode": "lines",
+      "line": {
+        "width": 1.88976377952756,
+        "color": "rgba(114,148,212,1)",
+        "dash": "solid"
+      },
+      "hoveron": "points",
+      "name": "45-54",
+      "legendgroup": "45-54",
+      "showlegend": true,
+      "xaxis": "x4",
+      "yaxis": "y",
+      "hoverinfo": "text",
+      "frame": null
+    }
+  ],
+  "layout": {
+    "margin": {
+      "t": 71.9701120797011,
+      "r": 25.9028642590286,
+      "b": 56.9663760896638,
+      "l": 50.8094645080946
+    },
+    "plot_bgcolor": "rgba(255,255,255,1)",
+    "paper_bgcolor": "rgba(255,255,255,1)",
+    "font": {
+      "color": "rgba(0,0,0,1)",
+      "family": "",
+      "size": 19.9252801992528
+    },
+    "title": {
+      "text": "Antipsychotics utilization in Swedish women",
+      "font": {
+        "color": "rgba(0,0,0,1)",
+        "family": "",
+        "size": 23.9103362391034
+      },
+      "x": 0,
+      "xref": "paper"
+    },
+    "xaxis": {
+      "domain": [
+        0,
+        0.235767657000534
+      ],
+      "automargin": true,
+      "type": "linear",
+      "autorange": false,
+      "range": [
+        2004.8,
+        2020.2
+      ],
+      "tickmode": "array",
+      "ticktext": [
+        "2006",
+        "2012",
+        "2018"
+      ],
+      "tickvals": [
+        2006,
+        2012,
+        2018
+      ],
+      "categoryorder": "array",
+      "categoryarray": [
+        "2006",
+        "2012",
+        "2018"
+      ],
+      "nticks": null,
+      "ticks": "outside",
+      "tickcolor": "rgba(179,179,179,1)",
+      "ticklen": 4.9813200498132,
+      "tickwidth": 0.452847277255746,
+      "showticklabels": true,
+      "tickfont": {
+        "color": "rgba(77,77,77,1)",
+        "family": "",
+        "size": 15.9402241594022
+      },
+      "tickangle": 0,
+      "showline": false,
+      "linecolor": null,
+      "linewidth": 0,
+      "showgrid": true,
+      "gridcolor": "rgba(222,222,222,1)",
+      "gridwidth": 0.452847277255746,
+      "zeroline": false,
+      "anchor": "y",
+      "title": "",
+      "hoverformat": ".2f"
+    },
+    "annotations": [
+      {
+        "text": "year",
+        "x": 0.5,
+        "y": -0.071386586016723,
+        "showarrow": false,
+        "ax": 0,
+        "ay": 0,
+        "font": {
+          "color": "rgba(0,0,0,1)",
+          "family": "",
+          "size": 19.9252801992528
+        },
+        "xref": "paper",
+        "yref": "paper",
+        "textangle": 0,
+        "xanchor": "center",
+        "yanchor": "top",
+        "annotationType": "axis"
+      },
+      {
+        "text": "Number of female patients<br />per 1,000 women in the population",
+        "x": -0.0441202632983455,
+        "y": 0.5,
+        "showarrow": false,
+        "ax": 0,
+        "ay": 0,
+        "font": {
+          "color": "rgba(0,0,0,1)",
+          "family": "",
+          "size": 19.9252801992528
+        },
+        "xref": "paper",
+        "yref": "paper",
+        "textangle": -90,
+        "xanchor": "right",
+        "yanchor": "center",
+        "annotationType": "axis"
+      },
+      {
+        "text": "20-24",
+        "x": 0.117883828500267,
+        "y": 1,
+        "showarrow": false,
+        "ax": 0,
+        "ay": 0,
+        "font": {
+          "color": "rgba(255,255,255,1)",
+          "family": "",
+          "size": 15.9402241594022
+        },
+        "xref": "paper",
+        "yref": "paper",
+        "textangle": 0,
+        "xanchor": "center",
+        "yanchor": "bottom"
+      },
+      {
+        "text": "25-34",
+        "x": 0.375,
+        "y": 1,
+        "showarrow": false,
+        "ax": 0,
+        "ay": 0,
+        "font": {
+          "color": "rgba(255,255,255,1)",
+          "family": "",
+          "size": 15.9402241594022
+        },
+        "xref": "paper",
+        "yref": "paper",
+        "textangle": 0,
+        "xanchor": "center",
+        "yanchor": "bottom"
+      },
+      {
+        "text": "35-44",
+        "x": 0.625,
+        "y": 1,
+        "showarrow": false,
+        "ax": 0,
+        "ay": 0,
+        "font": {
+          "color": "rgba(255,255,255,1)",
+          "family": "",
+          "size": 15.9402241594022
+        },
+        "xref": "paper",
+        "yref": "paper",
+        "textangle": 0,
+        "xanchor": "center",
+        "yanchor": "bottom"
+      },
+      {
+        "text": "45-54",
+        "x": 0.882116171499733,
+        "y": 1,
+        "showarrow": false,
+        "ax": 0,
+        "ay": 0,
+        "font": {
+          "color": "rgba(255,255,255,1)",
+          "family": "",
+          "size": 15.9402241594022
+        },
+        "xref": "paper",
+        "yref": "paper",
+        "textangle": 0,
+        "xanchor": "center",
+        "yanchor": "bottom"
+      },
+      {
+        "text": "N05A",
+        "x": 1,
+        "y": 0.5,
+        "showarrow": false,
+        "ax": 0,
+        "ay": 0,
+        "font": {
+          "color": "rgba(255,255,255,1)",
+          "family": "",
+          "size": 15.9402241594022
+        },
+        "xref": "paper",
+        "yref": "paper",
+        "textangle": 90,
+        "xanchor": "left",
+        "yanchor": "middle"
+      }
+    ],
+    "yaxis": {
+      "domain": [
+        0,
+        1
+      ],
+      "automargin": true,
+      "type": "linear",
+      "autorange": false,
+      "range": [
+        6.50105041941818,
+        21.4300769086677
+      ],
+      "tickmode": "array",
+      "ticktext": [
+        "10",
+        "15",
+        "20"
+      ],
+      "tickvals": [
+        10,
+        15,
+        20
+      ],
+      "categoryorder": "array",
+      "categoryarray": [
+        "10",
+        "15",
+        "20"
+      ],
+      "nticks": null,
+      "ticks": "outside",
+      "tickcolor": "rgba(179,179,179,1)",
+      "ticklen": 4.9813200498132,
+      "tickwidth": 0.452847277255746,
+      "showticklabels": true,
+      "tickfont": {
+        "color": "rgba(77,77,77,1)",
+        "family": "",
+        "size": 15.9402241594022
+      },
+      "tickangle": 0,
+      "showline": false,
+      "linecolor": null,
+      "linewidth": 0,
+      "showgrid": true,
+      "gridcolor": "rgba(222,222,222,1)",
+      "gridwidth": 0.452847277255746,
+      "zeroline": false,
+      "anchor": "x",
+      "title": "",
+      "hoverformat": ".2f"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "fillcolor": "transparent",
+        "line": {
+          "color": "rgba(179,179,179,1)",
+          "width": 0.905694554511491,
+          "linetype": "solid"
+        },
+        "yref": "paper",
+        "xref": "paper",
+        "x0": 0,
+        "x1": 0.235767657000534,
+        "y0": 0,
+        "y1": 1
+      },
+      {
+        "type": "rect",
+        "fillcolor": "rgba(179,179,179,1)",
+        "line": {
+          "color": "transparent",
+          "width": 0.905694554511491,
+          "linetype": "solid"
+        },
+        "yref": "paper",
+        "xref": "paper",
+        "x0": 0,
+        "x1": 0.235767657000534,
+        "y0": 0,
+        "y1": 31.8804483188045,
+        "yanchor": 1,
+        "ysizemode": "pixel"
+      },
+      {
+        "type": "rect",
+        "fillcolor": "transparent",
+        "line": {
+          "color": "rgba(179,179,179,1)",
+          "width": 0.905694554511491,
+          "linetype": "solid"
+        },
+        "yref": "paper",
+        "xref": "paper",
+        "x0": 0.264232342999466,
+        "x1": 0.485767657000534,
+        "y0": 0,
+        "y1": 1
+      },
+      {
+        "type": "rect",
+        "fillcolor": "rgba(179,179,179,1)",
+        "line": {
+          "color": "transparent",
+          "width": 0.905694554511491,
+          "linetype": "solid"
+        },
+        "yref": "paper",
+        "xref": "paper",
+        "x0": 0.264232342999466,
+        "x1": 0.485767657000534,
+        "y0": 0,
+        "y1": 31.8804483188045,
+        "yanchor": 1,
+        "ysizemode": "pixel"
+      },
+      {
+        "type": "rect",
+        "fillcolor": "transparent",
+        "line": {
+          "color": "rgba(179,179,179,1)",
+          "width": 0.905694554511491,
+          "linetype": "solid"
+        },
+        "yref": "paper",
+        "xref": "paper",
+        "x0": 0.514232342999466,
+        "x1": 0.735767657000534,
+        "y0": 0,
+        "y1": 1
+      },
+      {
+        "type": "rect",
+        "fillcolor": "rgba(179,179,179,1)",
+        "line": {
+          "color": "transparent",
+          "width": 0.905694554511491,
+          "linetype": "solid"
+        },
+        "yref": "paper",
+        "xref": "paper",
+        "x0": 0.514232342999466,
+        "x1": 0.735767657000534,
+        "y0": 0,
+        "y1": 31.8804483188045,
+        "yanchor": 1,
+        "ysizemode": "pixel"
+      },
+      {
+        "type": "rect",
+        "fillcolor": "transparent",
+        "line": {
+          "color": "rgba(179,179,179,1)",
+          "width": 0.905694554511491,
+          "linetype": "solid"
+        },
+        "yref": "paper",
+        "xref": "paper",
+        "x0": 0.764232342999466,
+        "x1": 1,
+        "y0": 0,
+        "y1": 1
+      },
+      {
+        "type": "rect",
+        "fillcolor": "rgba(179,179,179,1)",
+        "line": {
+          "color": "transparent",
+          "width": 0.905694554511491,
+          "linetype": "solid"
+        },
+        "yref": "paper",
+        "xref": "paper",
+        "x0": 0.764232342999466,
+        "x1": 1,
+        "y0": 0,
+        "y1": 31.8804483188045,
+        "yanchor": 1,
+        "ysizemode": "pixel"
+      },
+      {
+        "type": "rect",
+        "fillcolor": "rgba(179,179,179,1)",
+        "line": {
+          "color": "transparent",
+          "width": 0.905694554511491,
+          "linetype": "solid"
+        },
+        "yref": "paper",
+        "xref": "paper",
+        "y0": 0,
+        "y1": 1,
+        "x0": 0,
+        "x1": 31.8804483188045,
+        "xanchor": 1,
+        "xsizemode": "pixel"
+      }
+    ],
+    "xaxis2": {
+      "type": "linear",
+      "autorange": false,
+      "range": [
+        2004.8,
+        2020.2
+      ],
+      "tickmode": "array",
+      "ticktext": [
+        "2006",
+        "2012",
+        "2018"
+      ],
+      "tickvals": [
+        2006,
+        2012,
+        2018
+      ],
+      "categoryorder": "array",
+      "categoryarray": [
+        "2006",
+        "2012",
+        "2018"
+      ],
+      "nticks": null,
+      "ticks": "outside",
+      "tickcolor": "rgba(179,179,179,1)",
+      "ticklen": 4.9813200498132,
+      "tickwidth": 0.452847277255746,
+      "showticklabels": true,
+      "tickfont": {
+        "color": "rgba(77,77,77,1)",
+        "family": "",
+        "size": 15.9402241594022
+      },
+      "tickangle": 0,
+      "showline": false,
+      "linecolor": null,
+      "linewidth": 0,
+      "showgrid": true,
+      "domain": [
+        0.264232342999466,
+        0.485767657000534
+      ],
+      "gridcolor": "rgba(222,222,222,1)",
+      "gridwidth": 0.452847277255746,
+      "zeroline": false,
+      "anchor": "y",
+      "title": "",
+      "hoverformat": ".2f"
+    },
+    "xaxis3": {
+      "type": "linear",
+      "autorange": false,
+      "range": [
+        2004.8,
+        2020.2
+      ],
+      "tickmode": "array",
+      "ticktext": [
+        "2006",
+        "2012",
+        "2018"
+      ],
+      "tickvals": [
+        2006,
+        2012,
+        2018
+      ],
+      "categoryorder": "array",
+      "categoryarray": [
+        "2006",
+        "2012",
+        "2018"
+      ],
+      "nticks": null,
+      "ticks": "outside",
+      "tickcolor": "rgba(179,179,179,1)",
+      "ticklen": 4.9813200498132,
+      "tickwidth": 0.452847277255746,
+      "showticklabels": true,
+      "tickfont": {
+        "color": "rgba(77,77,77,1)",
+        "family": "",
+        "size": 15.9402241594022
+      },
+      "tickangle": 0,
+      "showline": false,
+      "linecolor": null,
+      "linewidth": 0,
+      "showgrid": true,
+      "domain": [
+        0.514232342999466,
+        0.735767657000534
+      ],
+      "gridcolor": "rgba(222,222,222,1)",
+      "gridwidth": 0.452847277255746,
+      "zeroline": false,
+      "anchor": "y",
+      "title": "",
+      "hoverformat": ".2f"
+    },
+    "xaxis4": {
+      "type": "linear",
+      "autorange": false,
+      "range": [
+        2004.8,
+        2020.2
+      ],
+      "tickmode": "array",
+      "ticktext": [
+        "2006",
+        "2012",
+        "2018"
+      ],
+      "tickvals": [
+        2006,
+        2012,
+        2018
+      ],
+      "categoryorder": "array",
+      "categoryarray": [
+        "2006",
+        "2012",
+        "2018"
+      ],
+      "nticks": null,
+      "ticks": "outside",
+      "tickcolor": "rgba(179,179,179,1)",
+      "ticklen": 4.9813200498132,
+      "tickwidth": 0.452847277255746,
+      "showticklabels": true,
+      "tickfont": {
+        "color": "rgba(77,77,77,1)",
+        "family": "",
+        "size": 15.9402241594022
+      },
+      "tickangle": 0,
+      "showline": false,
+      "linecolor": null,
+      "linewidth": 0,
+      "showgrid": true,
+      "domain": [
+        0.764232342999466,
+        1
+      ],
+      "gridcolor": "rgba(222,222,222,1)",
+      "gridwidth": 0.452847277255746,
+      "zeroline": false,
+      "anchor": "y",
+      "title": "",
+      "hoverformat": ".2f"
+    },
+    "showlegend": false,
+    "legend": {
+      "bgcolor": "rgba(255,255,255,1)",
+      "bordercolor": "transparent",
+      "borderwidth": 2.57695060844667,
+      "font": {
+        "color": "rgba(0,0,0,1)",
+        "family": "",
+        "size": 15.9402241594022
+      }
+    },
+    "hovermode": "closest",
+    "barmode": "relative"
+  },
+  "config": {
+    "doubleClick": "reset",
+    "showSendToCloud": false
+  },
+  "source": "A",
+  "attrs": {
+    "dcd46f5ba407": {
+      "x": {},
+      "y": {},
+      "colour": {},
+      "type": "scatter"
+    }
+  },
+  "cur_data": "dcd46f5ba407",
+  "visdat": {
+    "dcd46f5ba407": [
+      "function (y) ",
+      "x"
+    ]
+  },
+  "highlight": {
+    "on": "plotly_click",
+    "persistent": false,
+    "dynamic": false,
+    "selectize": false,
+    "opacityDim": 0.2,
+    "selected": {
+      "opacity": 1
+    },
+    "debounce": 0
+  },
+  "shinyEvents": [
+    "plotly_hover",
+    "plotly_click",
+    "plotly_selected",
+    "plotly_relayout",
+    "plotly_brushed",
+    "plotly_brushing",
+    "plotly_clickannotation",
+    "plotly_doubleclick",
+    "plotly_deselect",
+    "plotly_afterplot",
+    "plotly_sunburstclick"
+  ],
+  "base_url": "https://plot.ly"
+}
