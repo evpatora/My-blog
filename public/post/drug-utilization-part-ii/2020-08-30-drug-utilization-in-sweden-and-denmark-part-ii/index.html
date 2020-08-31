@@ -905,7 +905,7 @@ data &lt;- data_se %&gt;%
   ggplot(aes(x = year, y = patients_per_1000_inhabitants, color = country)) +
   geom_path(position = position_dodge(width = 1)) +
   facet_grid(rows = vars(drug, ATC), cols = vars(age_cat), scales = &quot;free&quot;, drop = T) +
-  theme_light(base_size = 15) +
+  theme_light(base_size = 14) +
   scale_x_continuous(breaks = c(seq(1999, 2019, 10))) +
   scale_color_manual(values = wes_palette(name = &quot;GrandBudapest1&quot;, type = &quot;discrete&quot;)) +
   theme(plot.caption = element_text(hjust = 0),

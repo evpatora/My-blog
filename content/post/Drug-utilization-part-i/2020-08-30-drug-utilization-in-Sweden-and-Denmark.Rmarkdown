@@ -247,7 +247,7 @@ plot_se_utilization <- function(data, pattern, name){
   ggplot(aes(x = year, y = patients_per_1000_inhabitants, color = age_cat)) +
   geom_path(position = position_dodge(width = 1)) +
   facet_grid(rows = vars(ATC), cols = vars(age_cat), scales = "free", drop = T) +
-  theme_light(base_size = 15) +
+  theme_light(base_size = 14) +
   scale_color_manual(values = wes_palette(name = "GrandBudapest1")) +
   scale_x_continuous(breaks = c(seq(2006, 2019, 6))) +
   theme(plot.caption = element_text(hjust = 0),

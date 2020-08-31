@@ -318,7 +318,7 @@ plot_utilization <- function(data, drug_regex, title){
   ggplot(aes(x = year, y = patients_per_1000_inhabitants, color = country)) +
   geom_path(position = position_dodge(width = 1)) +
   facet_grid(rows = vars(drug, ATC), cols = vars(age_cat), scales = "free", drop = T) +
-  theme_light(base_size = 15) +
+  theme_light(base_size = 14) +
   scale_x_continuous(breaks = c(seq(1999, 2019, 10))) +
   scale_color_manual(values = wes_palette(name = "GrandBudapest1", type = "discrete")) +
   theme(plot.caption = element_text(hjust = 0),
