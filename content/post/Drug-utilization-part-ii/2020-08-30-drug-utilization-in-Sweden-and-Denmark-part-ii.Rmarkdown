@@ -269,7 +269,7 @@ walk2(list_plotly, list_title, ~htmlwidgets::saveWidget(.x, paste0(.y, ".html"),
 ```{r}
 list_plots[[1]]
 ```
-Among Danish women aged between 20 and 54 years, antidepressants utilizatioin was steadily decreasing, while utilization among Swedish women was increasing. In Denmark, 56 women aged between 20-24 and 72 women aged between 35-45 56 per 1000 women in the population received antidepressants prescription.
+Among Danish women aged between 20 and 54 years, antidepressants utilizatioin was steadily decreasing, while utilization among Swedish women was increasing. In Denmark, 56 women aged between 20-24 and 72 women aged between 35-45 per 1000 women in the population received antidepressants prescription.
 ```{r}
 list_plots[[2]]
 ```

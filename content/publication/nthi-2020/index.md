@@ -17,7 +17,7 @@ publication: In *Infection and Immunity*
 publication_types:
 - "2"
 publishDate: "2020-07-20T00:00:00Z"
-summary: Vaginal bleeding in early pregnancy is not associated with a higher cancer risk compared with pregnancies in women from the general population of similar age.
+summary: Evasion of IgM binding by NTHi strains increases strains' survival in blood.
 tags: ["NTHi", "Infectious disease", "Internship", "Immunology"]
 title: Antibody binding and complement-mediated killing of invasive Haemophilus influenzae isolates from Spain, Portugal, and the Netherlands
 ---

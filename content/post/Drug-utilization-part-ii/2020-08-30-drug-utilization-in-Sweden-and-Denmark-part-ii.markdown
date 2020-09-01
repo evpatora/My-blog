@@ -344,7 +344,7 @@ list_plots[[1]]
 ```
 
 <img src="/post/Drug-utilization-part-ii/2020-08-30-drug-utilization-in-Sweden-and-Denmark-part-ii_files/figure-html/unnamed-chunk-11-1.png" width="672" />
-Among Danish women aged between 20 and 54 years, antidepressants utilizatioin was steadily decreasing, while utilization among Swedish women was increasing. In Denmark, 56 women aged between 20-24 and 72 women aged between 35-45 56 per 1000 women in the population received antidepressants prescription.
+Among Danish women aged between 20 and 54 years, antidepressants utilizatioin was steadily decreasing, while utilization among Swedish women was increasing. In Denmark, 56 women aged between 20-24 and 72 women aged between 35-45 per 1000 women in the population received antidepressants prescription.
 
 ```r
 list_plots[[2]]

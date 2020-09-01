@@ -39,7 +39,7 @@ date_format = "Jan 2006"
   location = "the Netherlands"
   date_start = "2015-01-09"
   date_end = "2017-01-08"
-  description = """MSc level courses in clinical epidemiology, epidemiology of infectious diseases, and statistics. Applied training during 6-months external internship at RIVM: Rijksinstituut voor Volksgezondheid en Milieu."""
+  description = """MSc level courses in clinical epidemiology, epidemiology of infectious diseases, and statistics. Applied training during 6-months external internship at Rijksinstituut voor Volksgezondheid en Milieu (RIVM)."""
   
   [[experience]]
   title = "MD"
